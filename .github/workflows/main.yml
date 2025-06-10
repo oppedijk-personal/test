@@ -1,5 +1,11 @@
-steps:
-  - name: ZAP Scan
-    uses: zaproxy/action-baseline@v0.14.0
-    with:
-      target: 'https://ginandjuice.shop'
+on: [workflow_dispatch]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan the webapplication
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: 'https://ginandjuice.shop'
