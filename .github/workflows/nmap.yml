@@ -1,0 +1,22 @@
+name: Check SSL Strength
+on: [workflow_dispatch]
+
+jobs:
+  ssl-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run SSL strength check
+        id: ssl_check
+        run: |
+          result=$(nmap --script ssl-enum-ciphers -p 443 scan.homeqgo.nl | grep "least strength: " | awk -F 'least strength: ' '{print $2}')
+          echo "SSL Strength: $result"
+          if [[ "$result" != "A" ]]; then
+            echo "Failure: SSL strength is not A!"
+            exit 1
+          fi
+
+      - name: Final step (Only runs if previous step succeeds)
+        run: echo "SSL strength check passed!"
