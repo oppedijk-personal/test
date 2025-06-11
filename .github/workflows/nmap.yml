@@ -14,7 +14,7 @@ jobs:
       - name: Run SSL strength check
         id: ssl_check
         run: |
-          result=$(nmap --script ssl-enum-ciphers -p 443 scan.homeqgo.nl | grep "least strength: " | awk -F 'least strength: ' '{print $2}')
+          result=$(nmap --script ssl-enum-ciphers -p 443 oppedijk.com | grep "least strength: " | awk -F 'least strength: ' '{print $2}')
           echo "SSL Strength: $result"
           if [[ "$result" != "A" ]]; then
             echo "Failure: SSL strength is not A!"
